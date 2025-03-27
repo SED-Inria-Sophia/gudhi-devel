@@ -383,6 +383,8 @@ file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/gudhi")
 configure_file("gudhi/__init__.py.in" "${CMAKE_CURRENT_BINARY_DIR}/gudhi/__init__.py" @ONLY)
 
 # Other .py files
+file(COPY "gudhi/off_utils.py" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/gudhi")
+file(COPY "gudhi/strong_witness_complex.py" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/gudhi")
 file(COPY "gudhi/delaunay_complex.py" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/gudhi")
 file(COPY "gudhi/persistence_graphical_tools.py" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/gudhi")
 file(COPY "gudhi/representations" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/gudhi/")
