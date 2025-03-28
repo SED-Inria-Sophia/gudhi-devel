@@ -9,5 +9,16 @@ dependencies:
   - boost
   - nanobind
   - numpy
-  - cython
   - cgal-cpp
+  - qt = 5.*.*
+  - matplotlib
+  - scipy
+  - scikit-learn
+  - sphinx
+  - sphinxcontrib-bibtex
+  - sphinx-autodoc-typehints
+  - pip
+  - pip:
+      - pydata_sphinx_theme
+      - POT
+      - sphinx-paramlinks
