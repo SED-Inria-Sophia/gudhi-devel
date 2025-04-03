@@ -81,3 +81,37 @@ configure_file(${CMAKE_SOURCE_DIR}/.github/for_maintainers/new_gudhi_version_cre
 
 message("++ GUDHI_MODULES list is:\"${GUDHI_MODULES}\"")
 message("++ GUDHI_MISSING_MODULES list is:\"${GUDHI_MISSING_MODULES}\"")
+
+## ###################################################################
+## Output directory setup
+## ###################################################################
+
+include(GNUInstallDirs)
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+
+## ###################################################################
+## Default build type (RelWithDebInfo)
+## ###################################################################
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to 'Release' as none was specified.")
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+## #############################################################################
+## Target cmake
+## #############################################################################
+
+add_subdirectory(src/Simplex_tree)
+
+## ###################################################################
+## Exporting
+## ###################################################################
+
+include(GUDHIExport)
+
+export(PACKAGE GUDHI)

@@ -1,6 +1,9 @@
 # Classical CMake build directory
 /*build*
 
+# Local install directory
+install
+
 # Python specific
 **/__pycache__
 
