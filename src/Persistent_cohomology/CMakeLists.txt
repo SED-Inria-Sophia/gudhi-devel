@@ -1,6 +1,6 @@
 ### CMakeLists.txt ---
 
-project(SimplexTree
+project(PersistentCohomology
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
 )
@@ -10,16 +10,12 @@ LANGUAGES CXX
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  include/gudhi/Simplex_tree.h
-  include/gudhi/Simplex_tree/Simplex_tree_iterators.h
-  include/gudhi/Simplex_tree/Simplex_tree_node_explicit_storage.h
-  include/gudhi/Simplex_tree/Simplex_tree_siblings.h
-  include/gudhi/Simplex_tree/Simplex_tree_star_simplex_iterators.h
-  include/gudhi/Simplex_tree/filtration_value_utils.h
-  include/gudhi/Simplex_tree/hooks_simplex_base.h
-  include/gudhi/Simplex_tree/indexing_tag.h
-  include/gudhi/Simplex_tree/serialization_utils.h
-  include/gudhi/Simplex_tree/simplex_tree_options.h
+  include/gudhi/Persistent_cohomology.h
+  include/gudhi/Persistence_on_a_line.h
+  include/gudhi/Persistence_on_rectangle.h
+  include/gudhi/Persistent_cohomology/Field_Zp.h
+  include/gudhi/Persistent_cohomology/Multi_field.h
+  include/gudhi/Persistent_cohomology/Persistent_cohomology_column.h
 )
 
 set(${PROJECT_NAME}_SOURCES

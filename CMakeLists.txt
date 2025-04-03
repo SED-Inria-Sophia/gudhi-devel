@@ -106,7 +106,9 @@ endif()
 ## Target cmake
 ## #############################################################################
 
+add_subdirectory(src/common)
 add_subdirectory(src/Simplex_tree)
+add_subdirectory(src/Persistent_cohomology)
 
 ## ###################################################################
 ## Exporting

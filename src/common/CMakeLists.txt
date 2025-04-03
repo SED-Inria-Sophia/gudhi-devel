@@ -1,6 +1,6 @@
 ### CMakeLists.txt ---
 
-project(SimplexTree
+project(Common
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
 )
@@ -10,17 +10,30 @@ LANGUAGES CXX
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  include/gudhi/Simplex_tree.h
-  include/gudhi/Simplex_tree/Simplex_tree_iterators.h
-  include/gudhi/Simplex_tree/Simplex_tree_node_explicit_storage.h
-  include/gudhi/Simplex_tree/Simplex_tree_siblings.h
-  include/gudhi/Simplex_tree/Simplex_tree_star_simplex_iterators.h
-  include/gudhi/Simplex_tree/filtration_value_utils.h
-  include/gudhi/Simplex_tree/hooks_simplex_base.h
-  include/gudhi/Simplex_tree/indexing_tag.h
-  include/gudhi/Simplex_tree/serialization_utils.h
-  include/gudhi/Simplex_tree/simplex_tree_options.h
+  include/gudhi/Clock.h
+  include/gudhi/Debug_utils.h
+  include/gudhi/Null_output_iterator.h
+  include/gudhi/Off_reader.h
+  include/gudhi/Point.h
+  include/gudhi/Points_3D_off_io.h
+  include/gudhi/Points_off_io.h
+  include/gudhi/Simple_object_pool.h
+  include/gudhi/Unitary_tests_utils.h
+  include/gudhi/allocator.h
+  include/gudhi/console_color.h
+  include/gudhi/distance_functions.h
+  include/gudhi/graph_simplicial_complex.h
+  include/gudhi/reader_utils.h
+  include/gudhi/uint128.h
+  include/gudhi/writing_persistence_to_file.h
 )
+
+if (TARGET CGAL::CGAL)
+  set(${PROJECT_NAME}_HEADERS
+    ${${PROJECT_NAME}_HEADERS}
+    include/gudhi/random_point_generators.h
+  )
+endif()
 
 set(${PROJECT_NAME}_SOURCES
 )
@@ -37,11 +50,10 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
 
-if(WITH_GUDHI_USE_TBB AND TARGET TBB::tbb)
-  target_link_libraries(${PROJECT_NAME} INTERFACE TBB::tbb)
+if(TARGET CGAL::CGAL)
+  target_link_libraries(${PROJECT_NAME} INTERFACE CGAL::CGAL)
 endif()
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
