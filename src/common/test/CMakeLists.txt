@@ -1,8 +1,10 @@
+### CMakeLists.txt ---
+
 include(GUDHI_boost_test)
 
-add_executable ( Common_test_points_off_reader test_points_off_reader.cpp )
-add_executable ( Common_test_distance_matrix_reader test_distance_matrix_reader.cpp )
-add_executable ( Common_test_persistence_intervals_reader test_persistence_intervals_reader.cpp )
+add_executable_with_targets( Common_test_points_off_reader test_points_off_reader.cpp GUDHI::Common)
+add_executable_with_targets ( Common_test_distance_matrix_reader test_distance_matrix_reader.cpp GUDHI::Common)
+add_executable_with_targets ( Common_test_persistence_intervals_reader test_persistence_intervals_reader.cpp GUDHI::Common)
 
 # Do not forget to copy test files in current binary dir
 file(COPY "${CMAKE_SOURCE_DIR}/data/points/alphacomplexdoc.off" DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
@@ -15,3 +17,6 @@ file(COPY "${CMAKE_SOURCE_DIR}/src/common/test/persistence_intervals_without_dim
 gudhi_add_boost_test(Common_test_points_off_reader)
 gudhi_add_boost_test(Common_test_distance_matrix_reader)
 gudhi_add_boost_test(Common_test_persistence_intervals_reader)
+
+######################################################################
+### CMakeLists.txt ends here
