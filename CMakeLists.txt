@@ -109,6 +109,7 @@ endif()
 add_subdirectory(src/common)
 add_subdirectory(src/Simplex_tree)
 add_subdirectory(src/Persistent_cohomology)
+add_subdirectory(src/Persistence_matrix)
 
 ## ###################################################################
 ## Exporting
