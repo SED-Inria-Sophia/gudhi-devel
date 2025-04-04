@@ -1,3 +1,5 @@
+### CMakeLists.txt ---
+
 include(GUDHI_boost_test)
 
 # Do not forget to copy test files in current binary dir
@@ -37,3 +39,6 @@ gudhi_add_boost_test(Simplex_tree_data_test_unit)
 
 add_executable_with_targets(Simplex_tree_constness_test_unit simplex_tree_constness_unit_test.cpp GUDHI::SimplexTree)
 gudhi_add_boost_test(Simplex_tree_constness_test_unit)
+
+######################################################################
+### CMakeLists.txt ends here

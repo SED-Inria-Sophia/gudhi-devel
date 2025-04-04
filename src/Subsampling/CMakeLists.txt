@@ -1,8 +1,6 @@
 ### CMakeLists.txt ---
 
-if (TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
-
-project(SpatialSearching
+project(Subsampling
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
 )
@@ -12,7 +10,9 @@ LANGUAGES CXX
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  include/gudhi/Kd_tree_search.h
+  include/gudhi/choose_n_farthest_points.h
+  include/gudhi/pick_n_random_points.h
+  include/gudhi/sparsify_point_set.h
 )
 
 set(${PROJECT_NAME}_SOURCES
@@ -31,9 +31,8 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
+target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::SpatialSearching)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
-target_link_libraries(${PROJECT_NAME} INTERFACE CGAL::CGAL)
-target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
@@ -80,7 +79,11 @@ export(
   FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
 
-endif (TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
+## #############################################################################
+## Testing the module
+## #############################################################################
+
+add_subdirectory(test)
 
 ######################################################################
 ### CMakeLists.txt ends here

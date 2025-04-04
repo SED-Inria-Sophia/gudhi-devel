@@ -13,6 +13,7 @@
 
 #include <gudhi/Debug_utils.h>
 #include <gudhi/graph_simplicial_complex.h>
+
 #include <gudhi/choose_n_farthest_points.h>
 
 #include <boost/graph/graph_traits.hpp>

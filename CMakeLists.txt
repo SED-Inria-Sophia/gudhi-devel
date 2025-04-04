@@ -106,6 +106,8 @@ endif()
 ## Target cmake
 ## #############################################################################
 
+set(CMAKE_INCLUDE_CURRENT_DIR OFF)
+
 add_subdirectory(src/common)
 
 add_subdirectory(src/Alpha_complex)
@@ -125,7 +127,7 @@ add_subdirectory(src/Rips_complex)
 add_subdirectory(src/Simplex_tree)
 # add_subdirectory(src/Skeleton_blocker)
 add_subdirectory(src/Spatial_searching)
-# add_subdirectory(src/Subsampling)
+add_subdirectory(src/Subsampling)
 add_subdirectory(src/Tangential_complex)
 # add_subdirectory(src/Toplex_map)
 add_subdirectory(src/Witness_complex)

@@ -30,11 +30,8 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
+target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Subsampling)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
-
-if(WITH_GUDHI_USE_TBB AND TARGET TBB::tbb)
-  target_link_libraries(${PROJECT_NAME} INTERFACE TBB::tbb)
-endif()
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
@@ -80,6 +77,12 @@ export(
   EXPORT GUDHI${PROJECT_NAME}-targets
   FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
+
+## #############################################################################
+## Testing the module
+## #############################################################################
+
+add_subdirectory(test)
 
 ######################################################################
 ### CMakeLists.txt ends here
