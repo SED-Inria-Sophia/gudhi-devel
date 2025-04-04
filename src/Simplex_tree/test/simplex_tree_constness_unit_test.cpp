@@ -14,7 +14,7 @@
 #define BOOST_TEST_MODULE "simplex_tree_constness"
 #include <boost/test/unit_test.hpp>
 
-#include "gudhi/Simplex_tree.h"
+#include <gudhi/Simplex_tree.h>
 
 using namespace Gudhi;
 

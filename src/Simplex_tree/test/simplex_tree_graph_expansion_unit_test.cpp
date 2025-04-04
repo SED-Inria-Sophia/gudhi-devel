@@ -16,8 +16,9 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/mpl/list.hpp>
 
-#include "gudhi/Simplex_tree.h"
+#include <gudhi/Simplex_tree.h>
 #include <gudhi/Unitary_tests_utils.h>
+
 
 using namespace Gudhi;
 

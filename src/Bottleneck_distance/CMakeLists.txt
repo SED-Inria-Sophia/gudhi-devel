@@ -1,6 +1,8 @@
 ### CMakeLists.txt ---
 
-project(SimplexTree
+if(TARGET CGAL::CGAL)
+
+project(BottleneckDistance
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
 )
@@ -10,16 +12,11 @@ LANGUAGES CXX
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  include/gudhi/Simplex_tree.h
-  include/gudhi/Simplex_tree/Simplex_tree_iterators.h
-  include/gudhi/Simplex_tree/Simplex_tree_node_explicit_storage.h
-  include/gudhi/Simplex_tree/Simplex_tree_siblings.h
-  include/gudhi/Simplex_tree/Simplex_tree_star_simplex_iterators.h
-  include/gudhi/Simplex_tree/filtration_value_utils.h
-  include/gudhi/Simplex_tree/hooks_simplex_base.h
-  include/gudhi/Simplex_tree/indexing_tag.h
-  include/gudhi/Simplex_tree/serialization_utils.h
-  include/gudhi/Simplex_tree/simplex_tree_options.h
+  include/gudhi/Bottleneck.h
+  include/gudhi/Graph_matching.h
+  include/gudhi/Internal_point.h
+  include/gudhi/Neighbors_finder.h
+  include/gudhi/Persistence_graph.h
 )
 
 set(${PROJECT_NAME}_SOURCES
@@ -36,8 +33,10 @@ add_library(${PROJECT_NAME} INTERFACE
 target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} INTERFACE CGAL::CGAL)
 
 if(WITH_GUDHI_USE_TBB AND TARGET TBB::tbb)
   target_link_libraries(${PROJECT_NAME} INTERFACE TBB::tbb)
@@ -88,11 +87,7 @@ export(
   FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
 
-## #############################################################################
-##
-## #############################################################################
-
-add_subdirectory(test)
+endif(TARGET CGAL::CGAL)
 
 ######################################################################
 ### CMakeLists.txt ends here

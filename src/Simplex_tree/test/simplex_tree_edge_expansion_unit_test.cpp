@@ -17,11 +17,12 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/mpl/list.hpp>
 
-#include "gudhi/Simplex_tree.h"
-#include <gudhi/Unitary_tests_utils.h>
-#include <gudhi/Rips_complex.h>
 #include <gudhi/Simplex_tree.h>
+
+#include <gudhi/Unitary_tests_utils.h>
 #include <gudhi/distance_functions.h>
+
+#include <gudhi/Rips_complex.h>
 
 using namespace Gudhi;
 

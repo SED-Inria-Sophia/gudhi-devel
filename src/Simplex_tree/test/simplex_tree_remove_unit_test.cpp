@@ -16,7 +16,7 @@
 
 //  ^
 // /!\ Nothing else from Simplex_tree shall be included to test includes are well defined.
-#include "gudhi/Simplex_tree.h"
+#include <gudhi/Simplex_tree.h>
 
 using namespace Gudhi;
 

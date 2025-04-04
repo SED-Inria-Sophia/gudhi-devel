@@ -1,6 +1,6 @@
 ### CMakeLists.txt ---
 
-project(SimplexTree
+project(Collapse
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
 )
@@ -10,16 +10,7 @@ LANGUAGES CXX
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  include/gudhi/Simplex_tree.h
-  include/gudhi/Simplex_tree/Simplex_tree_iterators.h
-  include/gudhi/Simplex_tree/Simplex_tree_node_explicit_storage.h
-  include/gudhi/Simplex_tree/Simplex_tree_siblings.h
-  include/gudhi/Simplex_tree/Simplex_tree_star_simplex_iterators.h
-  include/gudhi/Simplex_tree/filtration_value_utils.h
-  include/gudhi/Simplex_tree/hooks_simplex_base.h
-  include/gudhi/Simplex_tree/indexing_tag.h
-  include/gudhi/Simplex_tree/serialization_utils.h
-  include/gudhi/Simplex_tree/simplex_tree_options.h
+  include/gudhi/Flag_complex_edge_collapser.h
 )
 
 set(${PROJECT_NAME}_SOURCES
@@ -36,6 +27,7 @@ add_library(${PROJECT_NAME} INTERFACE
 target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
 
@@ -87,12 +79,6 @@ export(
   EXPORT GUDHI${PROJECT_NAME}-targets
   FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
-
-## #############################################################################
-##
-## #############################################################################
-
-add_subdirectory(test)
 
 ######################################################################
 ### CMakeLists.txt ends here
