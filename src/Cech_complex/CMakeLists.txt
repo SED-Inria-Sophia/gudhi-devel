@@ -1,6 +1,6 @@
 ### CMakeLists.txt ---
 
-if (TARGET CGAL::CGAL)
+if (TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
 
 project(CechComplex
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
@@ -37,6 +37,7 @@ target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
 
 target_link_libraries(${PROJECT_NAME} INTERFACE CGAL::CGAL)
+target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
@@ -83,7 +84,13 @@ export(
   FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
 
-endif (TARGET CGAL::CGAL)
+## #############################################################################
+## Testing the module
+## #############################################################################
+
+add_subdirectory(test)
+
+endif (TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
 
 ######################################################################
 ### CMakeLists.txt ends here
