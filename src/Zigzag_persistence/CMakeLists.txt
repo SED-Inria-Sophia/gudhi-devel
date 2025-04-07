@@ -1,6 +1,6 @@
 ### CMakeLists.txt ---
 
-project(SimplexTree
+project(ZigzagPersistence
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
 )
@@ -10,16 +10,8 @@ LANGUAGES CXX
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  include/gudhi/Simplex_tree.h
-  include/gudhi/Simplex_tree/Simplex_tree_iterators.h
-  include/gudhi/Simplex_tree/Simplex_tree_node_explicit_storage.h
-  include/gudhi/Simplex_tree/Simplex_tree_siblings.h
-  include/gudhi/Simplex_tree/Simplex_tree_star_simplex_iterators.h
-  include/gudhi/Simplex_tree/filtration_value_utils.h
-  include/gudhi/Simplex_tree/hooks_simplex_base.h
-  include/gudhi/Simplex_tree/indexing_tag.h
-  include/gudhi/Simplex_tree/serialization_utils.h
-  include/gudhi/Simplex_tree/simplex_tree_options.h
+  include/gudhi/filtered_zigzag_persistence.h
+  include/gudhi/zigzag_persistence.h
 )
 
 set(${PROJECT_NAME}_SOURCES
@@ -38,11 +30,8 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
+target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::PersistenceMatrix)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
-
-if(WITH_GUDHI_USE_TBB AND TARGET TBB::tbb)
-  target_link_libraries(${PROJECT_NAME} INTERFACE TBB::tbb)
-endif()
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 

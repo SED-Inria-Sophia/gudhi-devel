@@ -135,7 +135,7 @@ add_subdirectory(src/Subsampling)
 add_subdirectory(src/Tangential_complex)
 add_subdirectory(src/Toplex_map)
 add_subdirectory(src/Witness_complex)
-# add_subdirectory(src/Zigzag_persistence)
+add_subdirectory(src/Zigzag_persistence)
 
 ## ###################################################################
 ## Exporting
