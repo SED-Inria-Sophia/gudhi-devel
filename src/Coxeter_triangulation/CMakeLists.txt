@@ -1,8 +1,8 @@
 ### CMakeLists.txt ---
 
-if (TARGET GUDHI::SpatialSearching)
+if(TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
 
-project(Subsampling
+project(CoxeterTriangulation
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
 )
@@ -12,9 +12,43 @@ LANGUAGES CXX
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  include/gudhi/choose_n_farthest_points.h
-  include/gudhi/pick_n_random_points.h
-  include/gudhi/sparsify_point_set.h
+  include/gudhi/Coxeter_triangulation.h
+  include/gudhi/Freudenthal_triangulation.h
+  include/gudhi/Implicit_manifold_intersection_oracle.h
+  include/gudhi/Manifold_tracing.h
+  include/gudhi/Permutahedral_representation.h
+  include/gudhi/Coxeter_triangulation/Query_result.h
+  include/gudhi/Coxeter_triangulation/Cell_complex/Cell_complex.h
+  include/gudhi/Coxeter_triangulation/Cell_complex/Hasse_diagram_cell.h
+  include/gudhi/Functions/Cartesian_product.h
+  include/gudhi/Functions/Constant_function.h
+  include/gudhi/Functions/Embed_in_Rd.h
+  include/gudhi/Functions/Function_Sm_in_Rd.h
+  include/gudhi/Functions/Function_affine_plane_in_Rd.h
+  include/gudhi/Functions/Function_chair_in_R3.h
+  include/gudhi/Functions/Function_iron_in_R3.h
+  include/gudhi/Functions/Function_lemniscate_revolution_in_R3.h
+  include/gudhi/Functions/Function_moment_curve_in_Rd.h
+  include/gudhi/Functions/Function_torus_in_R3.h
+  include/gudhi/Functions/Function_whitney_umbrella_in_R3.h
+  include/gudhi/Functions/Linear_transformation.h
+  include/gudhi/Functions/Negation.h
+  include/gudhi/Functions/PL_approximation.h
+  include/gudhi/Functions/Translate.h
+  include/gudhi/Functions/random_orthogonal_matrix.h
+  include/gudhi/IO/Mesh_medit.h
+  include/gudhi/IO/build_mesh_from_cell_complex.h
+  include/gudhi/IO/output_debug_traces_to_html.h
+  include/gudhi/IO/output_meshes_to_medit.h
+  include/gudhi/Permutahedral_representation/Combination_iterator.h
+  include/gudhi/Permutahedral_representation/Integer_combination_iterator.h
+  include/gudhi/Permutahedral_representation/Ordered_set_partition_iterator.h
+  include/gudhi/Permutahedral_representation/Permutahedral_representation_iterators.h
+  include/gudhi/Permutahedral_representation/Permutation_iterator.h
+  include/gudhi/Permutahedral_representation/Set_partition_iterator.h
+  include/gudhi/Permutahedral_representation/Simplex_comparator.h
+  include/gudhi/Permutahedral_representation/Size_range.h
+  include/gudhi/Permutahedral_representation/face_from_indices.h
 )
 
 set(${PROJECT_NAME}_SOURCES
@@ -33,8 +67,9 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
-target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::SpatialSearching)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} INTERFACE CGAL::CGAL)
+target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
@@ -87,7 +122,7 @@ export(
 
 add_subdirectory(test)
 
-endif (TARGET GUDHI::SpatialSearching)
+endif(TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
 
 ######################################################################
 ### CMakeLists.txt ends here

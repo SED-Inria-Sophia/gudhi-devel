@@ -1,7 +1,5 @@
 ### CMakeLists.txt ---
 
-if(TARGET CGAL::CGAL)
-
 project(NerveGIC
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
@@ -36,8 +34,10 @@ target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::RipsComplex)
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::PersistentCohomology)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
 
-if(WITH_GUDHI_USE_TBB AND TARGET TBB::tbb)
-  target_link_libraries(${PROJECT_NAME} INTERFACE TBB::tbb)
+if(TARGET CGAL::CGAL)
+  target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::BottleneckDistance)
+else()
+  target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Hera)
 endif()
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -85,7 +85,11 @@ export(
   FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
 
-endif(TARGET CGAL::CGAL)
+## #############################################################################
+## Testing the module
+## #############################################################################
+
+add_subdirectory(test)
 
 ######################################################################
 ### CMakeLists.txt ends here

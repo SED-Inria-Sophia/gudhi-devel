@@ -6,8 +6,6 @@ include(GUDHI_boost_test)
 file(COPY "${CMAKE_SOURCE_DIR}/data/points/alphacomplexdoc.off" DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 file(COPY "${CMAKE_SOURCE_DIR}/data/distance_matrix/full_square_distance_matrix.csv" DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
 add_executable_with_targets(Rips_complex_test_unit test_rips_complex.cpp GUDHI::RipsComplex GUDHI::SimplexTree)
 gudhi_add_boost_test(Rips_complex_test_unit)
 

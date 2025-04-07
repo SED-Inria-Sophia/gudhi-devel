@@ -13,8 +13,6 @@ set(GUDHI_MISSING_MODULES "" CACHE INTERNAL "GUDHI_MISSING_MODULES")
 # This variable is used by Python CMakeLists.txt and by GUDHI_third_party_libraries to know its path
 set(GUDHI_PYTHON_PATH "src/python")
 
-include(GUDHI_submodules)
-
 if (WITH_GUDHI_THIRD_PARTY)
   # For third parties libraries management - To be done last as CGAL updates CMAKE_MODULE_PATH
   include(GUDHI_third_party_libraries NO_POLICY_SCOPE)
@@ -103,6 +101,12 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 ## #############################################################################
+## Hera dependency
+## #############################################################################
+
+include(GUDHI_hera)
+
+## #############################################################################
 ## Target cmake
 ## #############################################################################
 
@@ -116,9 +120,9 @@ add_subdirectory(src/Bottleneck_distance)
 add_subdirectory(src/Cech_complex)
 add_subdirectory(src/Collapse)
 add_subdirectory(src/Contraction)
-# add_subdirectory(src/Coxeter_triangulation)
-# add_subdirectory(src/Hasse_complex)
-# add_subdirectory(src/Nerve_GIC)
+add_subdirectory(src/Coxeter_triangulation)
+add_subdirectory(src/Hasse_complex)
+add_subdirectory(src/Nerve_GIC)
 add_subdirectory(src/Persistence_matrix)
 # add_subdirectory(src/Persistence_representations)
 add_subdirectory(src/Persistent_cohomology)

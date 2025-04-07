@@ -11,8 +11,14 @@ LANGUAGES CXX
 
 set(${PROJECT_NAME}_HEADERS
   include/gudhi/Rips_complex.h
-  include/gudhi/Sparse_rips_complex.h
 )
+
+if (TARGET GUDHI::Subsampling)
+  set(${PROJECT_NAME}_HEADERS
+    ${${PROJECT_NAME}_HEADERS}
+    include/gudhi/Sparse_rips_complex.h
+  )
+endif()
 
 set(${PROJECT_NAME}_SOURCES
 )
@@ -30,7 +36,9 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
-target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Subsampling)
+if (TARGET GUDHI::Subsampling)
+  target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Subsampling)
+endif()
 target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -82,7 +90,9 @@ export(
 ## Testing the module
 ## #############################################################################
 
-add_subdirectory(test)
+if (TARGET GUDHI::Subsampling)
+  add_subdirectory(test)
+endif(TARGET GUDHI::Subsampling)
 
 ######################################################################
 ### CMakeLists.txt ends here
