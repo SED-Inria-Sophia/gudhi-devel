@@ -1,6 +1,6 @@
 ### CMakeLists.txt ---
 
-project(SkeletonBlocker
+project(ToplexMap
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
 LANGUAGES CXX
 )
@@ -10,26 +10,8 @@ LANGUAGES CXX
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  include/gudhi/Skeleton_blocker.h
-  include/gudhi/Skeleton_blocker_complex.h
-  include/gudhi/Skeleton_blocker_geometric_complex.h
-  include/gudhi/Skeleton_blocker_link_complex.h
-  include/gudhi/Skeleton_blocker_simplifiable_complex.h
-  include/gudhi/Skeleton_blocker/Skeleton_blocker_complex_visitor.h
-  include/gudhi/Skeleton_blocker/Skeleton_blocker_link_superior.h
-  include/gudhi/Skeleton_blocker/Skeleton_blocker_off_io.h
-  include/gudhi/Skeleton_blocker/Skeleton_blocker_simplex.h
-  include/gudhi/Skeleton_blocker/Skeleton_blocker_simple_geometric_traits.h
-  include/gudhi/Skeleton_blocker/Skeleton_blocker_simple_traits.h
-  include/gudhi/Skeleton_blocker/Skeleton_blocker_sub_complex.h
-  include/gudhi/Skeleton_blocker/internal/Top_faces.h
-  include/gudhi/Skeleton_blocker/internal/Trie.h
-  include/gudhi/Skeleton_blocker/iterators/Skeleton_blockers_blockers_iterators.h
-  include/gudhi/Skeleton_blocker/iterators/Skeleton_blockers_edges_iterators.h
-  include/gudhi/Skeleton_blocker/iterators/Skeleton_blockers_iterators.h
-  include/gudhi/Skeleton_blocker/iterators/Skeleton_blockers_simplices_iterators.h
-  include/gudhi/Skeleton_blocker/iterators/Skeleton_blockers_triangles_iterators.h
-  include/gudhi/Skeleton_blocker/iterators/Skeleton_blockers_vertices_iterators.h
+  include/gudhi/Lazy_toplex_map.h
+  include/gudhi/Toplex_map.h
 )
 
 set(${PROJECT_NAME}_SOURCES

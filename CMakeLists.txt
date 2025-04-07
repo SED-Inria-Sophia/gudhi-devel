@@ -133,7 +133,7 @@ add_subdirectory(src/Skeleton_blocker)
 add_subdirectory(src/Spatial_searching)
 add_subdirectory(src/Subsampling)
 add_subdirectory(src/Tangential_complex)
-# add_subdirectory(src/Toplex_map)
+add_subdirectory(src/Toplex_map)
 add_subdirectory(src/Witness_complex)
 # add_subdirectory(src/Zigzag_persistence)
 
