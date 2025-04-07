@@ -1,6 +1,6 @@
 ### CMakeLists.txt ---
 
-if (TARGET CGAL::CGAL AND Eigen3::Eigen)
+if (TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
 
 project(WitnessComplex
 VERSION   "${GUDHI_MAJOR_VERSION}.${GUDHI_MINOR_VERSION}"
@@ -87,7 +87,13 @@ export(
   FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
 
-endif (TARGET CGAL::CGAL AND Eigen3::Eigen)
+## #############################################################################
+## Testing the module
+## #############################################################################
+
+add_subdirectory(test)
+
+endif (TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
 
 ######################################################################
 ### CMakeLists.txt ends here

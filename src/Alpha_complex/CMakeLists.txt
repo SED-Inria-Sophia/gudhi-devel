@@ -85,6 +85,12 @@ export(
   FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
 
+## #############################################################################
+## Testing the module
+## #############################################################################
+
+add_subdirectory(test)
+
 endif (TARGET CGAL::CGAL AND TARGET Eigen3::Eigen)
 
 ######################################################################
