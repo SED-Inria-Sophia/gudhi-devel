@@ -111,7 +111,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR OFF)
 add_subdirectory(src/common)
 
 add_subdirectory(src/Alpha_complex)
-# add_subdirectory(src/Bitmap_cubical_complex)
+add_subdirectory(src/Bitmap_cubical_complex)
 add_subdirectory(src/Bottleneck_distance)
 add_subdirectory(src/Cech_complex)
 add_subdirectory(src/Collapse)
