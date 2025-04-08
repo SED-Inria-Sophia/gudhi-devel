@@ -35,7 +35,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
-target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} INTERFACE Boost::boost)
 target_link_libraries(${PROJECT_NAME} INTERFACE CGAL::CGAL)
 
 if(WITH_GUDHI_USE_TBB AND TARGET TBB::tbb)
@@ -79,7 +79,7 @@ install(
   EXPORT      GUDHI${PROJECT_NAME}-targets
   FILE        GUDHI${PROJECT_NAME}Targets.cmake
   NAMESPACE   GUDHI::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/gudhi
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GUDHI
 )
 
 export(

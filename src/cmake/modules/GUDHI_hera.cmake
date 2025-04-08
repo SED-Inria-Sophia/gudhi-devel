@@ -28,6 +28,7 @@ else()
       DESTINATION ${odir}
     )
   endforeach()
+
   install(
     TARGETS Hera
     EXPORT  GUDHIHera-targets
@@ -40,7 +41,7 @@ else()
     EXPORT      GUDHIHera-targets
     FILE        GUDHIHeraTargets.cmake
     NAMESPACE   GUDHI::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/gudhi
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GUDHI
   )
 
   export(

@@ -32,7 +32,7 @@ target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::SimplexTree)
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::RipsComplex)
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::PersistentCohomology)
-target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} INTERFACE Boost::boost)
 
 if(TARGET CGAL::CGAL)
   target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::BottleneckDistance)
@@ -77,7 +77,7 @@ install(
   EXPORT      GUDHI${PROJECT_NAME}-targets
   FILE        GUDHI${PROJECT_NAME}Targets.cmake
   NAMESPACE   GUDHI::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/gudhi
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GUDHI
 )
 
 export(

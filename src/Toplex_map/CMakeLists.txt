@@ -30,7 +30,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
-target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} INTERFACE Boost::boost)
 
 add_library(GUDHI::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
@@ -69,7 +69,7 @@ install(
   EXPORT      GUDHI${PROJECT_NAME}-targets
   FILE        GUDHI${PROJECT_NAME}Targets.cmake
   NAMESPACE   GUDHI::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/gudhi
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GUDHI
 )
 
 export(

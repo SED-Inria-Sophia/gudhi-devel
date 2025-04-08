@@ -83,7 +83,7 @@ if (GMPXX_FOUND)
   add_library(GUDHI::GMPXX INTERFACE IMPORTED)
   set_target_properties(GUDHI::GMPXX PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${GMPXX_INCLUDE_DIR};${GMP_INCLUDE_DIR}"
-    INTERFACE_LINK_LIBRARIES      "${GMPXX_LIBRARIES};${GMP_LIBRARIES}"
+    INTERFACE_LINK_LIBRARIES      "${GMPXX_LIBRARIES};${GMP_LIBRARIES}")
 endif()
 
 ## #############################################################################
