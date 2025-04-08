@@ -90,8 +90,9 @@ install(
 )
 
 export(
-  EXPORT GUDHI${PROJECT_NAME}-targets
-  FILE   ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
+  EXPORT    GUDHI${PROJECT_NAME}-targets
+  NAMESPACE GUDHI::
+  FILE      ${CMAKE_BINARY_DIR}/GUDHI${PROJECT_NAME}Targets.cmake
 )
 
 ## #############################################################################
