@@ -1,10 +1,27 @@
+### CMakeLists.txt ---
+
 cmake_minimum_required(VERSION 3.15)
 
 project(GUDHIdev)
 
+## ###################################################################
+## cmake modules folder
+## ###################################################################
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/src/cmake/modules/")
-include(CMakeGUDHIVersion.txt)
 include(GUDHI_options)
+
+## ###################################################################
+## Version setup
+## ###################################################################
+
+include(CMakeGUDHIVersion.txt)
+
+## #############################################################################
+##
+## #############################################################################
 
 # Reset cache
 set(GUDHI_MODULES "" CACHE INTERNAL "GUDHI_MODULES")
@@ -20,66 +37,6 @@ endif()
 
 include(GUDHI_compilation_flags)
 
-# Add your new module in the list, order is not important
-# include(GUDHI_modules)
-
-# add_gudhi_module(common)
-# add_gudhi_module(Alpha_complex)
-# add_gudhi_module(Bitmap_cubical_complex)
-# add_gudhi_module(Bottleneck_distance)
-# add_gudhi_module(Collapse)
-# add_gudhi_module(Contraction)
-# add_gudhi_module(Coxeter_triangulation)
-# add_gudhi_module(Cech_complex)
-# add_gudhi_module(Hasse_complex)
-# add_gudhi_module(Persistence_representations)
-# add_gudhi_module(Persistent_cohomology)
-# add_gudhi_module(Rips_complex)
-# add_gudhi_module(Ripser)
-# add_gudhi_module(Simplex_tree)
-# add_gudhi_module(Skeleton_blocker)
-# add_gudhi_module(Spatial_searching)
-# add_gudhi_module(Subsampling)
-# add_gudhi_module(Tangential_complex)
-# add_gudhi_module(Toplex_map)
-# add_gudhi_module(Witness_complex)
-# add_gudhi_module(Nerve_GIC)
-# add_gudhi_module(Persistence_matrix)
-# add_gudhi_module(Zigzag_persistence)
-
-# # Include module CMake subdirectories
-# # GUDHI_SUB_DIRECTORIES is managed in CMAKE_MODULE_PATH/GUDHI_modules.cmake
-# foreach(GUDHI_MODULE ${GUDHI_MODULES})
-#   foreach(GUDHI_SUB_DIRECTORY ${GUDHI_SUB_DIRECTORIES})
-#     if(EXISTS ${CMAKE_SOURCE_DIR}/src/${GUDHI_MODULE}/${GUDHI_SUB_DIRECTORY}/CMakeLists.txt)
-#       add_subdirectory(src/${GUDHI_MODULE}/${GUDHI_SUB_DIRECTORY}/)
-#     endif()
-#   endforeach()
-# endforeach()
-
-# if (WITH_GUDHI_GUDHUI)
-#   add_subdirectory(src/GudhUI)
-# endif()
-
-# if (WITH_GUDHI_PYTHON)
-#   # specific for python module
-#   add_subdirectory(${GUDHI_PYTHON_PATH})
-# else()
-#   message("++ Python module will not be compiled because WITH_GUDHI_PYTHON is set to OFF")
-#   set(GUDHI_MISSING_MODULES ${GUDHI_MISSING_MODULES} "python")
-# endif()
-
-# # For "make user_version" - Requires GUDHI_modules to be performed
-# include(GUDHI_user_version_target)
-# set(GUDHI_BIBLIO_DIR ${CMAKE_CURRENT_BINARY_DIR})
-# # For "make doxygen" - Requires GUDHI_USER_VERSION_DIR to be set - Done in GUDHI_user_version_target for dev version
-# include(GUDHI_doxygen_target)
-
-# configure_file(${CMAKE_SOURCE_DIR}/.github/for_maintainers/new_gudhi_version_creation.md "${CMAKE_CURRENT_BINARY_DIR}/" @ONLY)
-
-# message("++ GUDHI_MODULES list is:\"${GUDHI_MODULES}\"")
-# message("++ GUDHI_MISSING_MODULES list is:\"${GUDHI_MISSING_MODULES}\"")
-
 ## ###################################################################
 ## Output directory setup
 ## ###################################################################
@@ -89,6 +46,18 @@ include(GNUInstallDirs)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+
+## #################################################################
+## Install prefix
+## #################################################################
+
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  if (DEFINED ENV{CONDA_PREFIX})
+    set(CMAKE_INSTALL_PREFIX "$ENV{CONDA_PREFIX}" CACHE PATH "${PROJECT_NAME} install prefix" FORCE)
+  else()
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "${PROJECT_NAME} install prefix" FORCE)
+  endif()
+endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 ## ###################################################################
 ## Default build type (RelWithDebInfo)
@@ -105,6 +74,17 @@ endif()
 ## #############################################################################
 
 include(GUDHI_hera)
+
+## #############################################################################
+## GMP dependency
+## #############################################################################
+
+if (GMPXX_FOUND)
+  add_library(GUDHI::GMPXX INTERFACE IMPORTED)
+  set_target_properties(GUDHI::GMPXX PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${GMPXX_INCLUDE_DIR};${GMP_INCLUDE_DIR}"
+    INTERFACE_LINK_LIBRARIES      "${GMPXX_LIBRARIES};${GMP_LIBRARIES}"
+endif()
 
 ## #############################################################################
 ## Target cmake
@@ -144,3 +124,6 @@ add_subdirectory(src/Zigzag_persistence)
 include(GUDHIExport)
 
 export(PACKAGE GUDHI)
+
+######################################################################
+### CMakeLists.txt ends here
