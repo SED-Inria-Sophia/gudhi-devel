@@ -80,8 +80,8 @@ include(GUDHI_hera)
 ## #############################################################################
 
 if (GMPXX_FOUND)
-  add_library(GUDHI::GMPXX INTERFACE IMPORTED)
-  set_target_properties(GUDHI::GMPXX PROPERTIES
+  add_library(GUDHI::Gmpxx INTERFACE IMPORTED)
+  set_target_properties(GUDHI::Gmpxx PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${GMPXX_INCLUDE_DIR};${GMP_INCLUDE_DIR}"
     INTERFACE_LINK_LIBRARIES      "${GMPXX_LIBRARIES};${GMP_LIBRARIES}")
 endif()
@@ -118,7 +118,7 @@ add_subdirectory(src/Witness_complex)
 add_subdirectory(src/Zigzag_persistence)
 
 ## ###################################################################
-## Exporting
+## Exporting project
 ## ###################################################################
 
 include(GUDHIExport)

@@ -2,11 +2,97 @@
 
 @PACKAGE_INIT@
 
-foreach(_comp GUDHI_FIND_COMPONENTS})
-  if (NOT TARGET ${_comp})
-    include("${CMAKE_CURRENT_LIST_DIR}/${_comp}Targets.cmake")
+################################################################################
+
+function(_scan_dependencies _comp _result)
+  set(_res ${${_result}})
+  if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/GUDHI${_comp}Targets.cmake")
+    file(STRINGS "${CMAKE_CURRENT_LIST_DIR}/GUDHI${_comp}Targets.cmake" data)
+    foreach(line ${data})
+      string(FIND "${line}" "INTERFACE_LINK_LIBRARIES" _LINE_FOUND)
+      if (_LINE_FOUND GREATER -1)
+        string(REPLACE "INTERFACE_LINK_LIBRARIES" "" _line_ "${line}")
+        string(REPLACE "\"" "" _line_ "${line}")
+        foreach(word ${_line_})
+          string(REGEX MATCHALL "GUDHI::([^:]+)" _word_ "${word}")
+          string(LENGTH "${_word_}" len)
+          if(len GREATER 0)
+            string(REPLACE "GUDHI::" "" _word "${_word_}")
+            list(APPEND _res "${_word}")
+            _scan_dependencies(${_word} _res)
+          endif()
+        endforeach()
+      endif()
+    endforeach()
+    list(APPEND _res "${_comp}")
+  else()
+    list(REMOVE_ITEM _res "${_comp}")
+  endif()
+
+  set(${_result} ${_res} PARENT_SCOPE)
+endfunction()
+
+################################################################################
+
+list(LENGTH GUDHI_FIND_COMPONENTS len)
+list(FIND GUDHI_FIND_COMPONENTS "ALL" ALL_FOUND)
+set(_COMPONENTS_AND_DEPS "")
+
+## #############################################################################
+## Search for all components whether ALL is specified or no components are specified
+## #############################################################################
+
+# Search for all available component-configuration directories...
+file(GLOB __gudhi_all_components
+  LIST_DIRECTORIES false RELATIVE "${CMAKE_CURRENT_LIST_DIR}"
+  "${CMAKE_CURRENT_LIST_DIR}/*Targets.cmake")
+# ...and extract component names from it.
+string(REGEX REPLACE "GUDHI" "" __gudhi_all_components "${__gudhi_all_components}")
+string(REGEX REPLACE "Targets.cmake" "" __gudhi_all_components "${__gudhi_all_components}")
+
+if(len EQUAL 0 OR ALL_FOUND GREATER -1)
+  list(LENGTH __gudhi_all_components leng)
+  if(leng GREATER 0)
+    set(GUDHI_FIND_COMPONENTS ${__gudhi_all_components})
+  endif()
+endif()
+
+## #############################################################################
+## Scan internal dependencies for every required components
+## #############################################################################
+
+foreach(_comp ${GUDHI_FIND_COMPONENTS})
+  if (NOT TARGET GUDHI::${_comp})
+    _scan_dependencies(${_comp} _COMPONENTS_AND_DEPS)
+  endif()
+  list(REMOVE_DUPLICATES _COMPONENTS_AND_DEPS)
+  #message("Deps: ${_COMPONENTS_AND_DEPS}")
+endforeach()
+
+## #############################################################################
+## Include every required components with dependencies
+## #############################################################################
+
+foreach(_comp ${_COMPONENTS_AND_DEPS})
+  if (NOT TARGET GUDHI::${_comp})
+    include("${CMAKE_CURRENT_LIST_DIR}/GUDHI${_comp}Targets.cmake")
+    #message("${_comp} is included.")
   endif()
 endforeach()
+
+## #############################################################################
+## Global convenient target GUDHI::Gudhi
+## #############################################################################
+
+if (NOT TARGET GUDHI::Gudhi)
+  add_library(GUDHI::Gudhi INTERFACE IMPORTED)
+  foreach(_comp ${__gudhi_all_components})
+    set_property(TARGET GUDHI::Gudhi APPEND PROPERTY INTERFACE_LINK_LIBRARIES GUDHI::${_comp})
+  endforeach()
+endif()
+
+#get_target_property(ALL_INTERFACES_LIBS GUDHI::Gudhi INTERFACE_LINK_LIBRARIES)
+#message("${ALL_INTERFACES_LIBS}")
 
 ######################################################################
 ### GUDHIConfig.cmake.in ends here

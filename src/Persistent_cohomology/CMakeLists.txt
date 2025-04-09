@@ -34,7 +34,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Common)
-target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::GMPXX)
+target_link_libraries(${PROJECT_NAME} INTERFACE GUDHI::Gmpxx)
 target_link_libraries(${PROJECT_NAME} INTERFACE Boost::boost)
 
 if(WITH_GUDHI_USE_TBB AND TARGET TBB::tbb)

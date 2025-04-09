@@ -45,8 +45,9 @@ else()
   )
 
   export(
-    EXPORT GUDHIHera-targets
-    FILE   ${CMAKE_BINARY_DIR}/GUDHIHeraTargets.cmake
+    EXPORT    GUDHIHera-targets
+    NAMESPACE GUDHI::
+    FILE      ${CMAKE_BINARY_DIR}/GUDHIHeraTargets.cmake
   )
 
 endif()

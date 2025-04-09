@@ -6,7 +6,7 @@ configure_package_config_file(
   ${CMAKE_SOURCE_DIR}/src/cmake/modules/GUDHIConfig.cmake.in
   ${CMAKE_BINARY_DIR}/GUDHIConfig.cmake
   INSTALL_DESTINATION
-  ${CMAKE_INSTALL_LIBDIR}/cmake/gudhi
+  ${CMAKE_INSTALL_LIBDIR}/cmake/GUDHI
 )
 
 write_basic_package_version_file(
@@ -18,7 +18,7 @@ write_basic_package_version_file(
 install(
   FILES       ${CMAKE_BINARY_DIR}/GUDHIConfig.cmake
               ${CMAKE_BINARY_DIR}/GUDHIConfigVersion.cmake
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/gudhi
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/GUDHI
 )
 
 ######################################################################
