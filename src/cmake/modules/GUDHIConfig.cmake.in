@@ -4,32 +4,37 @@
 
 ################################################################################
 
-function(_scan_dependencies _comp _result)
-  set(_res ${${_result}})
+function(_scan_dependencies _comp _intern_deps _extern_deps)
+  set(_int ${${_intern_deps}})
+  set(_ext ${${_extern_deps}})
   if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/GUDHI${_comp}Targets.cmake")
     file(STRINGS "${CMAKE_CURRENT_LIST_DIR}/GUDHI${_comp}Targets.cmake" data)
     foreach(line ${data})
       string(FIND "${line}" "INTERFACE_LINK_LIBRARIES" _LINE_FOUND)
       if (_LINE_FOUND GREATER -1)
-        string(REPLACE "INTERFACE_LINK_LIBRARIES" "" _line_ "${line}")
-        string(REPLACE "\"" "" _line_ "${line}")
+        string(REPLACE "INTERFACE_LINK_LIBRARIES" "" _line "${line}")
+        string(REPLACE "\"" "" _line_ "${_line}")
         foreach(word ${_line_})
           string(REGEX MATCHALL "GUDHI::([^:]+)" _word_ "${word}")
           string(LENGTH "${_word_}" len)
           if(len GREATER 0)
             string(REPLACE "GUDHI::" "" _word "${_word_}")
-            list(APPEND _res "${_word}")
-            _scan_dependencies(${_word} _res)
+            list(APPEND _int "${_word}")
+            _scan_dependencies(${_word} _int _ext)
+          else()
+            list(APPEND _ext "${word}")
           endif()
         endforeach()
       endif()
     endforeach()
-    list(APPEND _res "${_comp}")
+    list(APPEND _int "${_comp}")
   else()
-    list(REMOVE_ITEM _res "${_comp}")
+    list(REMOVE_ITEM _int "${_comp}")
+    list(APPEND _ext "${_comp}")
   endif()
 
-  set(${_result} ${_res} PARENT_SCOPE)
+  set(${_intern_deps} ${_int} PARENT_SCOPE)
+  set(${_extern_deps} ${_ext} PARENT_SCOPE)
 endfunction()
 
 ################################################################################
@@ -37,6 +42,7 @@ endfunction()
 list(LENGTH GUDHI_FIND_COMPONENTS len)
 list(FIND GUDHI_FIND_COMPONENTS "ALL" ALL_FOUND)
 set(_COMPONENTS_AND_DEPS "")
+set(_EXTERNAL_DEPS "")
 
 ## #############################################################################
 ## Search for all components whether ALL is specified or no components are specified
@@ -63,11 +69,13 @@ endif()
 
 foreach(_comp ${GUDHI_FIND_COMPONENTS})
   if (NOT TARGET GUDHI::${_comp})
-    _scan_dependencies(${_comp} _COMPONENTS_AND_DEPS)
+    _scan_dependencies(${_comp} _COMPONENTS_AND_DEPS _EXTERNAL_DEPS)
   endif()
   list(REMOVE_DUPLICATES _COMPONENTS_AND_DEPS)
-  #message("Deps: ${_COMPONENTS_AND_DEPS}")
+  list(REMOVE_DUPLICATES _EXTERNAL_DEPS)
 endforeach()
+message("Deps: ${_COMPONENTS_AND_DEPS}")
+message("Ext Deps: ${_EXTERNAL_DEPS}")
 
 ## #############################################################################
 ## Include every required components with dependencies
@@ -93,6 +101,52 @@ endif()
 
 #get_target_property(ALL_INTERFACES_LIBS GUDHI::Gudhi INTERFACE_LINK_LIBRARIES)
 #message("${ALL_INTERFACES_LIBS}")
+
+## #############################################################################
+## External dependencies
+## #############################################################################
+
+include(CMakeFindDependencyMacro)
+
+if ("Boost::boost" IN_LIST _EXTERNAL_DEPS AND NOT TARGET Boost::boost)
+  find_dependency(Boost REQUIRED)
+  if (NOT Boost_FOUND)
+    message(SEND_ERROR "GUDHI required Boost")
+  else()
+    message(STATUS "Boost for GUDHI is found")
+  endif()
+endif()
+
+if ("Gmpxx" IN_LIST _EXTERNAL_DEPS AND NOT TARGET GUDHI::GMPXX)
+  find_dependency(GMPXX REQUIRED)
+  if (GMPXX_FOUND)
+    message(STATUS "Gmpxx for GUDHI is found")
+    add_library(GUDHI::Gmpxx INTERFACE IMPORTED)
+    set_target_properties(GUDHI::Gmpxx PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES "${GMPXX_INCLUDE_DIR};${GMP_INCLUDE_DIR}"
+      INTERFACE_LINK_LIBRARIES      "${GMPXX_LIBRARIES};${GMP_LIBRARIES}")
+  else()
+    message(SEND_ERROR "GUDHI required GMPXX")
+  endif()
+endif()
+
+if ("Eigen3::Eigen" IN_LIST _EXTERNAL_DEPS AND NOT TARGET Eigen3::Eigen)
+  find_dependency(Eigen3 REQUIRED)
+  if (NOT EIGEN3_FOUND)
+    message(SEND_ERROR "GUDHI required Eigen")
+  else()
+    message(STATUS "Eigen for GUDHI is found")
+  endif()
+endif()
+
+if ("CGAL" IN_LIST _EXTERNAL_DEPS AND NOT TARGET CGAL::CGAL)
+  find_dependency(CGAL REQUIRED)
+  if(NOT CGAL_FOUND)
+    message(SEND_ERROR "GUDHI required CGAL")
+  else()
+    message(STATUS "CGAL for GUDHI is found")
+  endif()
+endif()
 
 ######################################################################
 ### GUDHIConfig.cmake.in ends here
