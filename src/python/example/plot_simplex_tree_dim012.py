@@ -2,17 +2,14 @@
 
 """ This file is part of the Gudhi Library - https://gudhi.inria.fr/ - which is released under MIT.
     See file LICENSE or go to https://gudhi.inria.fr/licensing/ for full license details.
-    Author(s):       ???
+    Author(s):       Marc Glisse
 
-    Copyright (C) 20?? Inria
+    Copyright (C) 2019 Inria
 
     Modification(s):
       - YYYY/MM Author: Description of the modification
 """
 
-__author__ = "???"
-__maintainer__ = ""
-__copyright__ = "Copyright (C) 20?? Inria"
 __license__ = "MIT"
 
 

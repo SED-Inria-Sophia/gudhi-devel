@@ -1,17 +1,12 @@
 """ This file is part of the Gudhi Library - https://gudhi.inria.fr/ - which is released under MIT.
     See file LICENSE or go to https://gudhi.inria.fr/licensing/ for full license details.
-    Author(s):       ???
+    Author(s):       Martin Royer, Yuichi Ike, Masatoshi Takenouchi
 
-    Copyright (C) 20?? Inria
+    Copyright (C) 2020 Inria, Copyright (C) 2020 Fujitsu Laboratories Ltd.
 
     Modification(s):
       - YYYY/MM Author: Description of the modification
 """
-
-__author__ = "???"
-__maintainer__ = ""
-__copyright__ = "Copyright (C) 20?? Inria"
-__license__ = "MIT"
 
 
 import numpy as np
